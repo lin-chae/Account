@@ -66,6 +66,7 @@ public class AccountService {
         checkDeleteAccount(accountUser, account);
         account.setAccountStatus(UNREGISTERED);
         account.setUnRegisteredAt(LocalDateTime.now());
+        accountRepository.save(account);
         return AccountDto.fromEntity(account);
     }
 

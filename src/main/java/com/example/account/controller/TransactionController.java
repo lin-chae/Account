@@ -1,9 +1,8 @@
 package com.example.account.controller;
 
+import com.example.account.dto.CancelBalance;
 import com.example.account.dto.UseBalance;
 import com.example.account.exception.AccountException;
-import com.example.account.service.AccountService;
-import com.example.account.service.RedisTestService;
 import com.example.account.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +34,24 @@ public class TransactionController {
             log.error("Failed ro use balance.");
 
             transactionService.saveFailedUseTransaction(
+                    request.getAccountNumber(),
+                    request.getAmount()
+            );
+            throw e;
+        }
+    }
+
+    @PostMapping("/transaction/cancel")
+    public CancelBalance.Response cancelBalance(
+            @Valid @RequestBody CancelBalance.Request request) {
+        try {
+            return CancelBalance.Response.from(
+                    transactionService.cancelBalance(request.getTransactionId(), request.getAccountNumber(), request.getAmount())
+            );
+        } catch (AccountException e) {
+            log.error("Failed ro use balance.");
+
+            transactionService.saveFailedCancelTransaction(
                     request.getAccountNumber(),
                     request.getAmount()
             );

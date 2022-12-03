@@ -2,7 +2,6 @@ package com.example.account.controller;
 
 import com.example.account.domain.Account;
 import com.example.account.dto.AccountDto;
-import com.example.account.dto.AccountInfo;
 import com.example.account.dto.CreateAccount;
 import com.example.account.dto.DeleteAccount;
 import com.example.account.service.AccountService;
@@ -126,4 +125,5 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$[2].accountNumber").value("0123456789"))
                 .andExpect(jsonPath("$[2].balance").value(4000L));
     }
+
 }
